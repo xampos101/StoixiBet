@@ -1,0 +1,98 @@
+# ============================================
+# SENSITIVE FILES - NEVER COMMIT THESE!
+# ============================================
+config.php
+*.env
+.env.local
+.env.production
+
+# ============================================
+# DEPENDENCIES
+# ============================================
+node_modules/
+vendor/
+composer.lock
+package-lock.json
+
+# ============================================
+# IDE & EDITOR FILES
+# ============================================
+.vscode/
+.idea/
+*.code-workspace
+*.swp
+*.swo
+*~
+.project
+.classpath
+.settings/
+
+# ============================================
+# OS FILES
+# ============================================
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+desktop.ini
+
+# ============================================
+# LOGS & TEMPORARY FILES
+# ============================================
+*.log
+logs/
+*.tmp
+*.temp
+*.bak
+*.backup
+*.cache
+
+# ============================================
+# DATABASE BACKUPS (keep schema, exclude backups)
+# ============================================
+*.sql.bak
+*.sql.backup
+*_backup.sql
+
+# ============================================
+# TEST & DEBUG FILES
+# ============================================
+test_connection.php
+check_*.php
+debug.php
+test_*.php
+
+# ============================================
+# BATCH & SCRIPT FILES (Windows)
+# ============================================
+*.bat
+*.cmd
+*.ps1
+
+# ============================================
+# PERSONAL DOCUMENTATION
+# ============================================
+ΟΔΗΓΙΕΣ_*.txt
+DEPLOYMENT_CHECKLIST.txt
+QUICK_START.txt
+site.txt
+*.notes
+*.todo
+PATH_UPDATES.md
+GIT_GUIDE.md
+STRUCTURE.md
+ORGANIZATION_COMPLETE.md
+update_paths.php
+fix_all_paths.php
+
+# ============================================
+# BUILD & DIST FILES
+# ============================================
+dist/
+build/
+*.min.js
+*.min.css
+
