@@ -143,16 +143,6 @@
 - **Table Management**: Κάντε click στον πίνακα για να τον ανοίξετε
 - **CRUD Operations**: Χρησιμοποιήστε τα forms για να προσθέσετε/επεξεργαστείτε/διαγράψετε records
 
-## 👥 Team
-
-Αυτό το project αναπτύχθηκε από τους:
-
-- **[Χαράλαμπος Ευθυμιάδης](https://github.com/xampos101)** - xampos101
-- **[Δημήτρης Μουχτάρης](https://github.com/mouxtaris)** - mouxtaris
-- **[Δημήτρης Παπαγιάννης](https://github.com/dipapag)** - dipapag
-
-**Τμήμα Πληροφορικής**  
-**Δημοκρίτειο Πανεπιστήμιο Θράκης**
 
 ## 📊 Database Schema
 
@@ -334,6 +324,17 @@ Default admin credentials:
 ---
 
 <div align="center">
+   
+## 👥 StoixiBet Team
+
+Αυτό το project αναπτύχθηκε από τους:
+
+- **[Χαράλαμπος Ευθυμιάδης](https://github.com/xampos101)** - xampos101
+- **[Δημήτρης Μουχτάρης](https://github.com/mouxtaris)** - mouxtaris
+- **[Δημήτρης Παπαγιάννης](https://github.com/dipapag)** - dipapag
+
+**Τμήμα Πληροφορικής**  
+**Δημοκρίτειο Πανεπιστήμιο Θράκης**
 
 **Made with ❤️ by the StoixiBet Team**
 
