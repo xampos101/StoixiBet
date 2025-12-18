@@ -317,14 +317,6 @@ Default admin credentials:
 - **GSAP** - GreenSock Animation Platform
 - **GitHub** - For hosting και API
 
-## 📧 Contact
-
-Για ερωτήσεις ή υποστήριξη, μπορείτε να επικοινωνήσετε με την ομάδα μέσω GitHub.
-
----
-
-<div align="center">
-   
 ## 👥 StoixiBet Team
 
 Αυτό το project αναπτύχθηκε από τους:
@@ -335,6 +327,15 @@ Default admin credentials:
 
 **Τμήμα Πληροφορικής**  
 **Δημοκρίτειο Πανεπιστήμιο Θράκης**
+
+## 📧 Contact
+
+Για ερωτήσεις ή υποστήριξη, μπορείτε να επικοινωνήσετε με την ομάδα μέσω GitHub.
+
+---
+
+<div align="center">
+   
 
 **Made with ❤️ by the StoixiBet Team**
 
