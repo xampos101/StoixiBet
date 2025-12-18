@@ -13,8 +13,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['action']) && $_POST['a
         $messageType = 'error';
     } else {
         try {
-            $stmt = $pdo->prepare("INSERT INTO LOGARIASMOS (account_id, player_id, iban, bank_name) VALUES (?, ?, ?, ?)");
-            $stmt->execute([$_POST['account_id'], $_POST['player_id'], $_POST['iban'], $_POST['bank_name']]);
+            $stmt = $pdo->prepare("INSERT INTO BANK_ACCOUNT (IBAN, player_id, bank_name) VALUES (?, ?, ?)");
+            $stmt->execute([$_POST['IBAN'], $_POST['player_id'], $_POST['bank_name']]);
             $message = "Ο λογαριασμός προστέθηκε επιτυχώς!";
             $messageType = 'success';
         } catch(PDOException $e) {
@@ -31,8 +31,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['action']) && $_POST['a
         $messageType = 'error';
     } else {
         try {
-            $stmt = $pdo->prepare("DELETE FROM LOGARIASMOS WHERE account_id = ?");
-            $stmt->execute([$_POST['account_id']]);
+            $stmt = $pdo->prepare("DELETE FROM BANK_ACCOUNT WHERE IBAN = ?");
+            $stmt->execute([$_POST['IBAN']]);
             $message = "Ο λογαριασμός διαγράφηκε επιτυχώς!";
             $messageType = 'success';
         } catch(PDOException $e) {
@@ -44,10 +44,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['action']) && $_POST['a
 
 // Ανάκτηση όλων των λογαριασμών
 $stmt = $pdo->query("
-    SELECT l.*, p.username 
-    FROM LOGARIASMOS l 
-    LEFT JOIN PAIKTHS p ON l.player_id = p.player_id 
-    ORDER BY l.account_id
+    SELECT b.*, p.username 
+    FROM BANK_ACCOUNT b 
+    LEFT JOIN PAIKTHS p ON b.player_id = p.player_id 
+    ORDER BY b.IBAN
 ");
 $accounts = $stmt->fetchAll();
 
@@ -60,7 +60,7 @@ $players = $stmt->fetchAll();
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Διαχείριση Λογαριασμών - StoixiBet Data Control</title>
+    <title>Διαχείριση Τραπεζικών Λογαριασμών - StoixiBet Data Control</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -133,8 +133,8 @@ $players = $stmt->fetchAll();
                     <input type="hidden" name="action" value="insert">
                     <div class="form-row">
                         <div class="form-group">
-                            <label for="account_id">ID Λογαριασμού</label>
-                            <input type="number" id="account_id" name="account_id" required class="form-input">
+                            <label for="IBAN">IBAN (16 χαρακτήρες)</label>
+                            <input type="text" id="IBAN" name="IBAN" maxlength="16" pattern=".{16}" required class="form-input">
                         </div>
                         <div class="form-group">
                             <label for="player_id">Παίκτης</label>
@@ -148,16 +148,12 @@ $players = $stmt->fetchAll();
                             </select>
                         </div>
                         <div class="form-group">
-                            <label for="iban">IBAN (μέχρι 34 χαρακτήρες)</label>
-                            <input type="text" id="iban" name="iban" maxlength="34" required class="form-input">
-                        </div>
-                        <div class="form-group">
                             <label for="bank_name">Όνομα Τράπεζας</label>
-                            <input type="text" id="bank_name" name="bank_name" maxlength="40" class="form-input">
+                            <input type="text" id="bank_name" name="bank_name" maxlength="40" required class="form-input">
                         </div>
                     </div>
                     <button type="submit" class="btn-primary form-submit">
-                        <span>Προσθήκη Λογαριασμού</span>
+                        <span>Προσθήκη Τραπεζικού Λογαριασμού</span>
                         <span class="btn-icon">+</span>
                     </button>
                 </form>
@@ -167,23 +163,22 @@ $players = $stmt->fetchAll();
             <!-- Πίνακας Εμφάνισης -->
             <div class="page-card">
                 <div class="card-header">
-                    <h3 class="card-title">Κατάλογος Λογαριασμών</h3>
-                    <span class="card-count"><?php echo count($accounts); ?> λογαριασμοί</span>
+                    <h3 class="card-title">Κατάλογος Τραπεζικών Λογαριασμών</h3>
+                    <span class="card-count"><?php echo count($accounts); ?> τραπεζικοί λογαριασμοί</span>
                 </div>
                 
                 <?php if (empty($accounts)): ?>
                     <div class="empty-state">
                         <div class="empty-icon">📭</div>
-                        <p>Δεν υπάρχουν λογαριασμοί στη βάση δεδομένων.</p>
+                        <p>Δεν υπάρχουν τραπεζικοί λογαριασμοί στη βάση δεδομένων.</p>
                     </div>
                 <?php else: ?>
                     <div class="table-wrapper">
                         <table class="modern-table">
                             <thead>
                                 <tr>
-                                    <th>ID Λογαριασμού</th>
-                                    <th>Παίκτης</th>
                                     <th>IBAN</th>
+                                    <th>Παίκτης</th>
                                     <th>Τράπεζα</th>
                                     <?php if ($isAdmin): ?>
                                     <th>Ενέργειες</th>
@@ -193,15 +188,14 @@ $players = $stmt->fetchAll();
                             <tbody>
                                 <?php foreach ($accounts as $account): ?>
                                     <tr>
-                                        <td><strong><?php echo htmlspecialchars($account['account_id']); ?></strong></td>
+                                        <td><strong><?php echo htmlspecialchars($account['IBAN']); ?></strong></td>
                                         <td><?php echo htmlspecialchars($account['username'] ?? $account['player_id']); ?></td>
-                                        <td><?php echo htmlspecialchars($account['iban']); ?></td>
-                                        <td><?php echo htmlspecialchars($account['bank_name'] ?? '-'); ?></td>
+                                        <td><?php echo htmlspecialchars($account['bank_name']); ?></td>
                                         <?php if ($isAdmin): ?>
                                         <td>
                                             <form method="POST" class="inline-form" onsubmit="return confirm('Είστε σίγουροι ότι θέλετε να διαγράψετε αυτόν τον λογαριασμό;');">
                                                 <input type="hidden" name="action" value="delete">
-                                                <input type="hidden" name="account_id" value="<?php echo $account['account_id']; ?>">
+                                                <input type="hidden" name="IBAN" value="<?php echo $account['IBAN']; ?>">
                                                 <button type="submit" class="btn-danger btn-small">
                                                     <span>Διαγραφή</span>
                                                     <span class="btn-icon">🗑️</span>

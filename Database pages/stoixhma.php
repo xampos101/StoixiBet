@@ -13,9 +13,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['action']) && $_POST['a
         $messageType = 'error';
     } else {
         try {
-            $datetime = str_replace('T', ' ', $_POST['stoixima_datetime']) . ':00';
-            $stmt = $pdo->prepare("INSERT INTO STOIXHMA (bet_id, description, stoixima_datetime, employee_id) VALUES (?, ?, ?, ?)");
-            $stmt->execute([$_POST['bet_id'], $_POST['description'], $datetime, $_POST['employee_id']]);
+            $datetime = str_replace('T', ' ', $_POST['bet_date']) . ':00';
+            $stmt = $pdo->prepare("INSERT INTO STOIXIMA (match_id, bet_id, bet_desc, bet_date, employee_id) VALUES (?, ?, ?, ?, ?)");
+            $stmt->execute([$_POST['match_id'], $_POST['bet_id'], $_POST['bet_desc'], $datetime, $_POST['employee_id']]);
             $message = "Το στοίχημα προστέθηκε επιτυχώς!";
             $messageType = 'success';
         } catch(PDOException $e) {
@@ -32,7 +32,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['action']) && $_POST['a
         $messageType = 'error';
     } else {
         try {
-            $stmt = $pdo->prepare("DELETE FROM STOIXHMA WHERE bet_id = ?");
+            $stmt = $pdo->prepare("DELETE FROM STOIXIMA WHERE bet_id = ?");
             $stmt->execute([$_POST['bet_id']]);
             $message = "Το στοίχημα διαγράφηκε επιτυχώς!";
             $messageType = 'success';
@@ -44,12 +44,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['action']) && $_POST['a
 }
 
 // Ανάκτηση όλων των στοιχημάτων
-$stmt = $pdo->query("SELECT s.*, y.employee_name FROM STOIXHMA s LEFT JOIN YPALLHLOS y ON s.employee_id = y.employee_id ORDER BY s.stoixima_datetime DESC");
+$stmt = $pdo->query("SELECT s.*, y.employee_name FROM STOIXIMA s LEFT JOIN YPALLHLOS y ON s.employee_id = y.employee_id ORDER BY s.bet_date DESC");
 $bets = $stmt->fetchAll();
 
 // Ανάκτηση υπαλλήλων για το dropdown
 $stmt = $pdo->query("SELECT employee_id, employee_name FROM YPALLHLOS ORDER BY employee_id");
 $employees = $stmt->fetchAll();
+
+// Ανάκτηση αγώνων για το dropdown
+$stmt = $pdo->query("SELECT match_id FROM AGONAS ORDER BY match_id");
+$matches = $stmt->fetchAll();
 ?>
 <!DOCTYPE html>
 <html lang="el">
@@ -129,21 +133,32 @@ $employees = $stmt->fetchAll();
                     <input type="hidden" name="action" value="insert">
                     <div class="form-row">
                         <div class="form-group">
+                            <label for="match_id">ID Αγώνα (6 χαρακτήρες)</label>
+                            <select id="match_id" name="match_id" required class="form-input">
+                                <option value="">-- Επιλέξτε Αγώνα --</option>
+                                <?php foreach ($matches as $match): ?>
+                                    <option value="<?php echo htmlspecialchars($match['match_id']); ?>">
+                                        <?php echo htmlspecialchars($match['match_id']); ?>
+                                    </option>
+                                <?php endforeach; ?>
+                            </select>
+                        </div>
+                        <div class="form-group">
                             <label for="bet_id">ID Στοιχήματος (7 χαρακτήρες)</label>
                             <input type="text" id="bet_id" name="bet_id" maxlength="7" pattern=".{7}" required class="form-input">
                         </div>
                         <div class="form-group">
-                            <label for="description">Περιγραφή</label>
-                            <input type="text" id="description" name="description" maxlength="60" required class="form-input">
+                            <label for="bet_desc">Περιγραφή</label>
+                            <input type="text" id="bet_desc" name="bet_desc" maxlength="60" required class="form-input">
                         </div>
                         <div class="form-group">
-                            <label for="stoixima_datetime">Ημερομηνία/Ώρα</label>
-                            <input type="datetime-local" id="stoixima_datetime" name="stoixima_datetime" required class="form-input">
+                            <label for="bet_date">Ημερομηνία/Ώρα</label>
+                            <input type="datetime-local" id="bet_date" name="bet_date" required class="form-input">
                         </div>
                         <div class="form-group">
                             <label for="employee_id">Υπάλληλος</label>
-                            <select id="employee_id" name="employee_id" required class="form-input">
-                                <option value="">-- Επιλέξτε Υπάλληλο --</option>
+                            <select id="employee_id" name="employee_id" class="form-input">
+                                <option value="">-- Επιλέξτε Υπάλληλο (Προαιρετικό) --</option>
                                 <?php foreach ($employees as $emp): ?>
                                     <option value="<?php echo htmlspecialchars($emp['employee_id']); ?>">
                                         <?php echo htmlspecialchars($emp['employee_id'] . ' - ' . $emp['employee_name']); ?>
@@ -177,6 +192,7 @@ $employees = $stmt->fetchAll();
                         <table class="modern-table">
                             <thead>
                                 <tr>
+                                    <th>ID Αγώνα</th>
                                     <th>ID Στοιχήματος</th>
                                     <th>Περιγραφή</th>
                                     <th>Ημερομηνία/Ώρα</th>
@@ -189,9 +205,10 @@ $employees = $stmt->fetchAll();
                             <tbody>
                                 <?php foreach ($bets as $bet): ?>
                                     <tr>
+                                        <td><?php echo htmlspecialchars($bet['match_id'] ?? '-'); ?></td>
                                         <td><strong><?php echo htmlspecialchars($bet['bet_id']); ?></strong></td>
-                                        <td><?php echo htmlspecialchars($bet['description']); ?></td>
-                                        <td><?php echo date('d/m/Y H:i', strtotime($bet['stoixima_datetime'])); ?></td>
+                                        <td><?php echo htmlspecialchars($bet['bet_desc']); ?></td>
+                                        <td><?php echo date('d/m/Y H:i', strtotime($bet['bet_date'])); ?></td>
                                         <td><?php echo htmlspecialchars($bet['employee_name'] ?? $bet['employee_id']); ?></td>
                                         <?php if ($isAdmin): ?>
                                         <td>

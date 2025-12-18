@@ -165,10 +165,9 @@ function initCustomCursor() {
 // STATIC SCROLL - Snap to Sections
 // ============================================
 function initStaticScroll() {
-    // Remove Lenis smooth scroll, use native scroll with snap
-    // The CSS scroll-snap-type handles the snapping behavior
+    // Auto-scroll με smooth behavior από hero section στα cards
+    // Το cards-grid έχει grid-auto-rows για να χωράνε όλα τα 11 cards
     
-    // Add scroll event to snap directly to cards section
     let isScrolling = false;
     window.addEventListener('wheel', (e) => {
         if (isScrolling) return;

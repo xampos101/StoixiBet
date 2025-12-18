@@ -14,7 +14,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['action']) && $_POST['a
     } else {
         try {
             $stmt = $pdo->prepare("INSERT INTO YPALLHLOS (employee_id, employee_name, salary) VALUES (?, ?, ?)");
-            $stmt->execute([$_POST['employee_id'], $_POST['fullname'], $_POST['salary']]);
+            $stmt->execute([$_POST['employee_id'], $_POST['employee_name'], $_POST['salary']]);
             $message = "Ο υπάλληλος προστέθηκε επιτυχώς!";
             $messageType = 'success';
         } catch(PDOException $e) {
@@ -128,8 +128,8 @@ $employees = $stmt->fetchAll();
                             <input type="text" id="employee_id" name="employee_id" maxlength="6" pattern=".{6}" required class="form-input">
                         </div>
                         <div class="form-group">
-                            <label for="fullname">Πλήρες Όνομα</label>
-                            <input type="text" id="fullname" name="fullname" maxlength="40" required class="form-input">
+                            <label for="employee_name">Πλήρες Όνομα</label>
+                            <input type="text" id="employee_name" name="employee_name" maxlength="40" required class="form-input">
                         </div>
                         <div class="form-group">
                             <label for="salary">Μισθός (€)</label>

@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StoixiBet Data Control</title>
+    <style>
+        @page {
+            size: A4;
+            margin: 2cm;
+        }
+        
+        body {
+            font-family: 'Times New Roman', serif;
+            font-size: 12pt;
+            line-height: 1.6;
+            color: #000;
+            max-width: 21cm;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        h1 {
+            font-size: 18pt;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 30px;
+            border-bottom: 2px solid #000;
+            padding-bottom: 10px;
+        }
+        
+        h2 {
+            font-size: 14pt;
+            font-weight: bold;
+            margin-top: 25px;
+            margin-bottom: 15px;
+            border-bottom: 1px solid #000;
+            padding-bottom: 5px;
+        }
+        
+        h3 {
+            font-size: 12pt;
+            font-weight: bold;
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+        
+        .section {
+            margin-bottom: 25px;
+        }
+        
+        .info-box {
+            border: 1px solid #000;
+            padding: 15px;
+            margin: 15px 0;
+            background-color: #f9f9f9;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+            font-size: 11pt;
+        }
+        
+        table, th, td {
+            border: 1px solid #000;
+        }
+        
+        th {
+            background-color: #e0e0e0;
+            padding: 8px;
+            font-weight: bold;
+            text-align: left;
+        }
+        
+        td {
+            padding: 8px;
+        }
+        
+        ul {
+            margin: 10px 0;
+            padding-left: 30px;
+        }
+        
+        li {
+            margin: 5px 0;
+        }
+        
+        p {
+            text-align: justify;
+            margin: 10px 0;
+        }
+        
+        .footer {
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid #000;
+            text-align: center;
+            font-size: 10pt;
+        }
+        
+        .highlight {
+            font-weight: bold;
+        }
+        
+        .note {
+            font-style: italic;
+            color: #333;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>ΠΑΡΑΔΟΤΕΑ ΕΡΓΑΣΙΑΣ<br>ΕΙΔΙΚΑ ΘΕΜΑΤΑ ΒΑΣΕΩΝ ΔΕΔΟΜΕΝΩΝ</h1>
+    
+    <div class="section">
+        <h2>1. ΣΤΟΙΧΕΙΑ ΟΜΑΔΑΣ</h2>
+        <div class="info-box">
+            <p><span class="highlight">Αριθμός Ομάδας:</span> 07</p>
+            <p><span class="highlight">Τίτλος Εργασίας:</span> StoixiBet Data Control - Σύστημα Διαχείρισης Βάσης Δεδομένων για Στοιχηματική Πλατφόρμα</p>
+        </div>
+    </div>
+    
+    <div class="section">
+        <h2>2. ΣΥΜΜΕΤΕΧΟΝΤΕΣ</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Όνομα</th>
+                    <th>Αριθμός Μητρώου</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Χαράλαμπος Ευθυμιάδης</td>
+                    <td>220090</td>
+                </tr>
+                <tr>
+                    <td>Δημήτρης Μουχτάρης</td>
+                    <td>220133</td>
+                </tr>
+                <tr>
+                    <td>Δημήτρης Παπαγιάννης</td>
+                    <td>220006</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    
+    <div class="section">
+        <h2>3. ΠΕΡΙΓΡΑΦΗ ΑΠΑΙΤΗΣΕΩΝ ΒΑΣΗΣ ΔΕΔΟΜΕΝΩΝ</h2>
+        
+        <h3>3.1 Γενική Περιγραφή</h3>
+        <p>
+            Το <span class="highlight">StoixiBet Data Control</span> είναι ένα σύστημα διαχείρισης βάσης δεδομένων 
+            που αναπτύχθηκε για τη διαχείριση μιας στοιχηματικής πλατφόρμας. Το σύστημα επιτρέπει τη διαχείριση 
+            παικτών, υπαλλήλων, στοιχημάτων, συμμετοχών, συναλλαγών, τραπεζικών λογαριασμών, αγώνων και μπόνους.
+        </p>
+        
+        <h3>3.2 Λειτουργικές Απαιτήσεις</h3>
+        <p>Το σύστημα πρέπει να υποστηρίζει:</p>
+        <ul>
+            <li><span class="highlight">Διαχείριση Παικτών:</span> Καταχώριση, επεξεργασία και διαχείριση στοιχείων παικτών (username, balance)</li>
+            <li><span class="highlight">Διαχείριση Υπαλλήλων:</span> Καταχώριση υπαλλήλων και μισθολογικών στοιχείων</li>
+            <li><span class="highlight">Διαχείριση Αγώνων:</span> Καταχώριση αγώνων (ομάδες, ημερομηνίες) με match_id (CHAR(6))</li>
+            <li><span class="highlight">Διαχείριση Στοιχημάτων:</span> Δημιουργία και διαχείριση στοιχημάτων με αναφορά στον αγώνα, περιγραφή (bet_desc) και υπάλληλο που τα δημιούργησε</li>
+            <li><span class="highlight">Διαχείριση Συμμετοχών:</span> Καταγραφή συμμετοχών παικτών σε στοιχήματα, ποσών στοιχηματισμού και ημερομηνίας</li>
+            <li><span class="highlight">Διαχείριση Συναλλαγών:</span> Καταγραφή συναλλαγών (καταθέσεις/ανταλήψεις) που πραγματοποιούν οι παίκτες</li>
+            <li><span class="highlight">Διαχείριση Τραπεζικών Λογαριασμών:</span> Διαχείριση τραπεζικών λογαριασμών (IBAN) των παικτών με σχέση 1:1</li>
+            <li><span class="highlight">Διαχείριση Μπόνους:</span> Διαχείριση διαθέσιμων μπόνους και ανάθεσή τους σε παίκτες</li>
+            <li><span class="highlight">Στατιστικά Στοιχημάτων:</span> Αυτόματη ενημέρωση πίνακα με αριθμό στοιχημάτων ανά υπάλληλο (μέσω Trigger)</li>
+        </ul>
+        
+        <h3>3.3 Δομή Βάσης Δεδομένων</h3>
+        <p>Η βάση δεδομένων αποτελείται από <span class="highlight">9 βασικούς πίνακες</span>, <span class="highlight">1 επιπλέον πίνακα</span> (BETS_IN_CHARGE), <span class="highlight">1 VIEW</span> (PAIKTHS_STOIXIMA), <span class="highlight">1 TRIGGER</span> και <span class="highlight">1 STORED PROCEDURE</span>:</p>
+        
+        <table>
+            <thead>
+                <tr>
+                    <th>Πίνακας</th>
+                    <th>Περιγραφή</th>
+                    <th>Κύρια Χαρακτηριστικά</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>PAIKTHS</strong></td>
+                    <td>Παίκτες</td>
+                    <td>player_id (PK, INT), username (VARCHAR(40), UNIQUE), balance (DECIMAL(10,2), DEFAULT 0.00)</td>
+                </tr>
+                <tr>
+                    <td><strong>YPALLHLOS</strong></td>
+                    <td>Υπάλληλοι</td>
+                    <td>employee_id (PK, CHAR(6)), employee_name (VARCHAR(40), NOT NULL), salary (DECIMAL(9,2), NOT NULL)</td>
+                </tr>
+                <tr>
+                    <td><strong>AGONAS</strong></td>
+                    <td>Αγώνες</td>
+                    <td>match_id (PK, CHAR(6)), home_team (VARCHAR(40), NOT NULL), away_team (VARCHAR(40), NOT NULL), match_date (DATETIME)</td>
+                </tr>
+                <tr>
+                    <td><strong>STOIXIMA</strong></td>
+                    <td>Στοιχήματα</td>
+                    <td>bet_id (PK, CHAR(7)), match_id (FK → AGONAS, CHAR(6)), bet_desc (VARCHAR(60), NOT NULL), bet_date (DATETIME, NOT NULL), employee_id (FK → YPALLHLOS, CHAR(6), NULL επιτρεπτό, ON DELETE SET NULL)</td>
+                </tr>
+                <tr>
+                    <td><strong>SYMMETOXI</strong></td>
+                    <td>Συμμετοχές</td>
+                    <td>(bet_id, player_id) Composite PK, bet_id (FK → STOIXIMA, CHAR(7), CASCADE), player_id (FK → PAIKTHS, INT, CASCADE), bet_amount (DECIMAL(10,2)), bet_date (DATETIME)</td>
+                </tr>
+                <tr>
+                    <td><strong>BANK_ACCOUNT</strong></td>
+                    <td>Τραπεζικοί Λογαριασμοί</td>
+                    <td>IBAN (PK, CHAR(16)), player_id (FK → PAIKTHS, INT, UNIQUE, CASCADE, NOT NULL), bank_name (VARCHAR(40), NOT NULL)</td>
+                </tr>
+                <tr>
+                    <td><strong>SYNALLAGES</strong></td>
+                    <td>Συναλλαγές</td>
+                    <td>transaction_id (PK, CHAR(6)), player_id (FK → PAIKTHS, INT, CASCADE, NOT NULL), amount (DECIMAL(8,2), NOT NULL), transaction_date (DATETIME, NOT NULL), transaction_type (VARCHAR(8))</td>
+                </tr>
+                <tr>
+                    <td><strong>BONUS</strong></td>
+                    <td>Μπόνους</td>
+                    <td>bonus_id (PK, CHAR(6)), bonus_type (VARCHAR(30)), bonus_value (DECIMAL(10,2)), expiration_date (DATE)</td>
+                </tr>
+                <tr>
+                    <td><strong>PAIKTHS_BONUS</strong></td>
+                    <td>Παίκτες-Μπόνους (Ενδιάμεσος Πίνακας)</td>
+                    <td>(player_id, bonus_id) Composite PK, player_id (FK → PAIKTHS, INT, CASCADE), bonus_id (FK → BONUS, CHAR(6), CASCADE)</td>
+                </tr>
+                <tr>
+                    <td><strong>BETS_IN_CHARGE</strong></td>
+                    <td>Στοιχήματα ανά Υπάλληλο</td>
+                    <td>employee_id (PK, FK → YPALLHLOS, CHAR(6), CASCADE), betsInCharge (INT) - Ενημερώνεται αυτόματα με TRIGGER yp_diaxeirizetai_bet</td>
+                </tr>
+                <tr>
+                    <td><strong>PAIKTHS_STOIXIMA</strong> (VIEW)</td>
+                    <td>Προβολή Παικτών-Στοιχημάτων</td>
+                    <td>Συνδυάζει: PAIKTHS.player_id, PAIKTHS.username, STOIXIMA.match_id, STOIXIMA.bet_id, STOIXIMA.bet_desc, SYMMETOXI.bet_amount</td>
+                </tr>
+            </tbody>
+        </table>
+        
+        <h3>3.4 Σχέσεις Μεταξύ Πινάκων</h3>
+        <p>Οι βασικές σχέσεις που υλοποιούνται είναι:</p>
+        <ul>
+            <li><span class="highlight">AGONAS → STOIXIMA:</span> Ένας αγώνας μπορεί να έχει πολλά στοιχήματα (One-to-Many) με CASCADE</li>
+            <li><span class="highlight">YPALLHLOS → STOIXIMA:</span> Ένας υπάλληλος μπορεί να δημιουργήσει πολλά στοιχήματα (One-to-Many, ON DELETE SET NULL)</li>
+            <li><span class="highlight">STOIXIMA → SYMMETOXI:</span> Ένα στοίχημα μπορεί να έχει πολλές συμμετοχές (One-to-Many) με CASCADE</li>
+            <li><span class="highlight">PAIKTHS → SYMMETOXI:</span> Ένας παίκτης μπορεί να συμμετάσχει σε πολλά στοιχήματα (One-to-Many) με CASCADE</li>
+            <li><span class="highlight">PAIKTHS → SYNALLAGES:</span> Ένας παίκτης μπορεί να έχει πολλές συναλλαγές (One-to-Many) με CASCADE</li>
+            <li><span class="highlight">PAIKTHS → BANK_ACCOUNT:</span> Ένας παίκτης έχει έναν μόνο λογαριασμό (One-to-One) με CASCADE</li>
+            <li><span class="highlight">PAIKTHS ↔ BONUS:</span> Σχέση Many-to-Many μέσω του πίνακα PAIKTHS_BONUS με CASCADE</li>
+            <li><span class="highlight">YPALLHLOS → BETS_IN_CHARGE:</span> Ένας υπάλληλος έχει μια εγγραφή με στατιστικά στοιχημάτων (One-to-One) με CASCADE</li>
+        </ul>
+        
+        <h3>3.5 Περιορισμοί και Ακεραιότητα Δεδομένων</h3>
+        <p>Η βάση δεδομένων έχει εφαρμοστεί με τους ακόλουθους περιορισμούς:</p>
+        <ul>
+            <li><span class="highlight">Primary Keys:</span> Κάθε πίνακας έχει Primary Key για μοναδική αναγνώριση εγγραφών</li>
+            <li><span class="highlight">Foreign Keys:</span> Υπάρχουν Foreign Key constraints για διατήρηση της ακεραιότητας των δεδομένων</li>
+            <li><span class="highlight">CASCADE Constraints:</span> ON DELETE CASCADE και ON UPDATE CASCADE σε όλα τα Foreign Keys για αυτόματη διαχείριση συσχετισμένων εγγραφών (π.χ. διαγραφή παίκτη διαγράφει αυτόματα συμμετοχές, λογαριασμό, συναλλαγές)</li>
+            <li><span class="highlight">UNIQUE Constraints:</span> Το username στον PAIKTHS, το IBAN στον BANK_ACCOUNT, και το player_id στον BANK_ACCOUNT (1:1 σχέση)</li>
+            <li><span class="highlight">NOT NULL Constraints:</span> Υποχρεωτικά πεδία όπως employee_name, bet_desc, amount, transaction_date</li>
+            <li><span class="highlight">Composite Keys:</span> Οι πίνακες SYMMETOXI και PAIKTHS_BONUS χρησιμοποιούν Composite Primary Keys</li>
+            <li><span class="highlight">SET NULL:</span> Στο STOIXIMA, το employee_id μπορεί να γίνει NULL αν διαγραφεί ο υπάλληλος (ON DELETE SET NULL)</li>
+        </ul>
+        
+        <h3>3.6 Προηγμένα Χαρακτηριστικά</h3>
+        <ul>
+            <li><span class="highlight">VIEW (PAIKTHS_STOIXIMA):</span> Προβολή που συνδυάζει πληροφορίες από τους πίνακες PAIKTHS, STOIXIMA, SYMMETOXI για εύκολη ανάκτηση δεδομένων</li>
+            <li><span class="highlight">TRIGGER (yp_diaxeirizetai_bet):</span> Αυτόματη ενημέρωση του πίνακα BETS_IN_CHARGE όταν προστίθεται νέο στοίχημα, αυξάνοντας τον μετρητή στοιχημάτων του αντίστοιχου υπαλλήλου</li>
+            <li><span class="highlight">STORED PROCEDURE (AddYpallhlos):</span> Διαδικασία για εύκολη εισαγωγή νέων υπαλλήλων</li>
+        </ul>
+        
+        <h3>3.7 Τεχνικές Προδιαγραφές</h3>
+        <ul>
+            <li><span class="highlight">Σύστημα Διαχείρισης Βάσης Δεδομένων:</span> MySQL 8.0+</li>
+            <li><span class="highlight">Character Set:</span> UTF-8 για υποστήριξη ελληνικών χαρακτήρων</li>
+            <li><span class="highlight">Δεδομένα:</span> DECIMAL(10,2) για χρηματικά ποσά, DECIMAL(9,2) για μισθούς, DATETIME για ημερομηνίες/ώρες, DATE για ημερομηνίες, CHAR για fixed-length strings, VARCHAR για variable-length strings</li>
+            <li><span class="highlight">Ακεραιότητα Δεδομένων:</span> Referential Integrity μέσω Foreign Keys με CASCADE για αυτόματη διαχείριση</li>
+            <li><span class="highlight">Αναζήτηση:</span> Support για LIKE queries, GROUP BY, JOIN operations, subqueries</li>
+        </ul>
+    </div>
+    
+    <div class="section">
+        <h2>4. ΣΥΝΟΨΗ ΥΛΟΠΟΙΗΣΗΣ</h2>
+        <p>
+            Η βάση δεδομένων υλοποιήθηκε πλήρως με όλους τους πίνακες (9 βασικούς + 1 επιπλέον), τις σχέσεις, 
+            τους περιορισμούς, CASCADE constraints, VIEW, TRIGGER και STORED PROCEDURE που περιγράφονται παραπάνω. 
+            Περιλαμβάνει δειγματικά δεδομένα για επίδειξη της λειτουργικότητας και πλήρη σχολιασμό στον κώδικα SQL 
+            που υποδεικνύει το ζητούμενο της εργασίας.
+        </p>
+        <p>
+            Όλοι οι πίνακες έχουν CASCADE constraints για αυτόματη διαγραφή συσχετισμένων εγγραφών όταν διαγράφεται 
+            μια κύρια εγγραφή (π.χ. διαγραφή παίκτη διαγράφει αυτόματα όλες τις συμμετοχές, τον λογαριασμό, τις 
+            συναλλαγές και τις αναθέσεις μπόνους του).
+        </p>
+    </div>
+    
+    <div class="footer">
+        <p><strong>Τμήμα Πληροφορικής</strong></p>
+        <p><strong>Δημοκρίτειο Πανεπιστήμιο Θράκης</strong></p>
+        <p>Μάθημα: Ειδικά Θέματα Βάσεων Δεδομένων</p>
+    </div>
+</body>
+</html>

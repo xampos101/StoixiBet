@@ -13,14 +13,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['action']) && $_POST['a
         $messageType = 'error';
     } else {
         try {
-            $datetime = str_replace('T', ' ', $_POST['bet_datetime']) . ':00';
-            $stmt = $pdo->prepare("INSERT INTO SUMMETOXH (player_id, bet_id, bet_amount, bet_datetime, result_amount) VALUES (?, ?, ?, ?, ?)");
+            $datetime = str_replace('T', ' ', $_POST['bet_date']) . ':00';
+            $stmt = $pdo->prepare("INSERT INTO SYMMETOXI (bet_id, player_id, bet_amount, bet_date) VALUES (?, ?, ?, ?)");
             $stmt->execute([
-                $_POST['player_id'], 
                 $_POST['bet_id'], 
+                $_POST['player_id'], 
                 $_POST['bet_amount'], 
-                $datetime,
-                $_POST['result_amount'] ?? 0.00
+                $datetime
             ]);
             $message = "Η συμμετοχή προστέθηκε επιτυχώς!";
             $messageType = 'success';
@@ -38,8 +37,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['action']) && $_POST['a
         $messageType = 'error';
     } else {
         try {
-            $stmt = $pdo->prepare("DELETE FROM SUMMETOXH WHERE player_id = ? AND bet_id = ?");
-            $stmt->execute([$_POST['player_id'], $_POST['bet_id']]);
+            $stmt = $pdo->prepare("DELETE FROM SYMMETOXI WHERE bet_id = ? AND player_id = ?");
+            $stmt->execute([$_POST['bet_id'], $_POST['player_id']]);
             $message = "Η συμμετοχή διαγράφηκε επιτυχώς!";
             $messageType = 'success';
         } catch(PDOException $e) {
@@ -51,11 +50,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['action']) && $_POST['a
 
 // Ανάκτηση όλων των συμμετοχών
 $stmt = $pdo->query("
-    SELECT s.*, p.username, st.description as bet_description 
-    FROM SUMMETOXH s 
+    SELECT s.*, p.username, st.bet_desc as bet_description 
+    FROM SYMMETOXI s 
     LEFT JOIN PAIKTHS p ON s.player_id = p.player_id 
-    LEFT JOIN STOIXHMA st ON s.bet_id = st.bet_id 
-    ORDER BY s.bet_datetime DESC
+    LEFT JOIN STOIXIMA st ON s.bet_id = st.bet_id 
+    ORDER BY s.bet_date DESC
 ");
 $participations = $stmt->fetchAll();
 
@@ -63,7 +62,7 @@ $participations = $stmt->fetchAll();
 $stmt = $pdo->query("SELECT player_id, username FROM PAIKTHS ORDER BY player_id");
 $players = $stmt->fetchAll();
 
-$stmt = $pdo->query("SELECT bet_id, description FROM STOIXHMA ORDER BY bet_id");
+$stmt = $pdo->query("SELECT bet_id, bet_desc FROM STOIXIMA ORDER BY bet_id");
 $bets = $stmt->fetchAll();
 ?>
 <!DOCTYPE html>
@@ -160,7 +159,7 @@ $bets = $stmt->fetchAll();
                                 <option value="">-- Επιλέξτε Στοίχημα --</option>
                                 <?php foreach ($bets as $bet): ?>
                                     <option value="<?php echo htmlspecialchars($bet['bet_id']); ?>">
-                                        <?php echo htmlspecialchars($bet['bet_id'] . ' - ' . $bet['description']); ?>
+                                        <?php echo htmlspecialchars($bet['bet_id'] . ' - ' . $bet['bet_desc']); ?>
                                     </option>
                                 <?php endforeach; ?>
                             </select>
@@ -170,12 +169,8 @@ $bets = $stmt->fetchAll();
                             <input type="number" id="bet_amount" name="bet_amount" step="0.01" required class="form-input">
                         </div>
                         <div class="form-group">
-                            <label for="bet_datetime">Ημερομηνία/Ώρα Στοιχήματος</label>
-                            <input type="datetime-local" id="bet_datetime" name="bet_datetime" required class="form-input">
-                        </div>
-                        <div class="form-group">
-                            <label for="result_amount">Ποσό Αποτελέσματος (€)</label>
-                            <input type="number" id="result_amount" name="result_amount" step="0.01" value="0.00" class="form-input">
+                            <label for="bet_date">Ημερομηνία/Ώρα Στοιχήματος</label>
+                            <input type="datetime-local" id="bet_date" name="bet_date" required class="form-input">
                         </div>
                     </div>
                     <button type="submit" class="btn-primary form-submit">
@@ -207,7 +202,6 @@ $bets = $stmt->fetchAll();
                                     <th>Στοίχημα</th>
                                     <th>Ποσό Στοιχήματος</th>
                                     <th>Ημερομηνία Στοιχήματος</th>
-                                    <th>Αποτέλεσμα</th>
                                     <?php if ($isAdmin): ?>
                                     <th>Ενέργειες</th>
                                     <?php endif; ?>
@@ -219,14 +213,13 @@ $bets = $stmt->fetchAll();
                                         <td><?php echo htmlspecialchars($part['username'] ?? $part['player_id']); ?></td>
                                         <td><?php echo htmlspecialchars($part['bet_description'] ?? $part['bet_id']); ?></td>
                                         <td class="balance-cell"><?php echo number_format($part['bet_amount'], 2); ?> €</td>
-                                        <td><?php echo date('d/m/Y H:i', strtotime($part['bet_datetime'])); ?></td>
-                                        <td class="balance-cell"><?php echo number_format($part['result_amount'], 2); ?> €</td>
+                                        <td><?php echo date('d/m/Y H:i', strtotime($part['bet_date'])); ?></td>
                                         <?php if ($isAdmin): ?>
                                         <td>
                                             <form method="POST" class="inline-form" onsubmit="return confirm('Είστε σίγουροι ότι θέλετε να διαγράψετε αυτή τη συμμετοχή;');">
                                                 <input type="hidden" name="action" value="delete">
-                                                <input type="hidden" name="player_id" value="<?php echo $part['player_id']; ?>">
                                                 <input type="hidden" name="bet_id" value="<?php echo $part['bet_id']; ?>">
+                                                <input type="hidden" name="player_id" value="<?php echo $part['player_id']; ?>">
                                                 <button type="submit" class="btn-danger btn-small">
                                                     <span>Διαγραφή</span>
                                                     <span class="btn-icon">🗑️</span>

@@ -125,8 +125,8 @@ $matches = $stmt->fetchAll();
                     <input type="hidden" name="action" value="insert">
                     <div class="form-row">
                         <div class="form-group">
-                            <label for="match_id">ID Αγώνα</label>
-                            <input type="number" id="match_id" name="match_id" required class="form-input">
+                            <label for="match_id">ID Αγώνα (6 χαρακτήρες)</label>
+                            <input type="text" id="match_id" name="match_id" maxlength="6" pattern=".{6}" required class="form-input">
                         </div>
                         <div class="form-group">
                             <label for="home_team">Ομάδα Εντός</label>

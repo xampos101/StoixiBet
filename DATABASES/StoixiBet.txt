@@ -1,10 +1,6 @@
--- ⚠️ ΣΗΜΑΝΤΙΚΟ: Αλλάξτε το xx με τον αριθμό ομάδας σας!
--- Αυτό το αρχείο είναι έτοιμο για εκτέλεση στον server
--- Η βάση student_25xx πρέπει να υπάρχει ήδη (δημιουργείται αυτόματα)
+CREATE DATABASE IF NOT EXISTS stoiximatiki; 
+USE stoiximatiki;
 
-USE student_25xx;  -- ⚠️ Αλλάξτε το xx!
-
--- Δημιουργία πινάκων
 CREATE TABLE IF NOT EXISTS PAIKTHS (
     player_id INT PRIMARY KEY,
     username VARCHAR(40) NOT NULL,
@@ -38,6 +34,37 @@ CREATE TABLE IF NOT EXISTS SUMMETOXH (
     FOREIGN KEY (bet_id) REFERENCES STOIXHMA(bet_id)       
     ON DELETE CASCADE  ON UPDATE CASCADE
 );
+-- Παικτες
+INSERT INTO PAIKTHS (player_id, username, balance)
+VALUES
+(1, 'giorgos28', 150.00),
+(2, 'maria32', 75.50),
+(3, 'alex25', 250.00);
+
+-- Υπαλληλοι
+INSERT INTO YPALLHLOS (employee_id, fullname, salary)
+VALUES
+('E001', 'Eleni Stamati', 1200.00),
+('E002', 'Petros Athanasiou', 1400.00),
+('E003', 'Nikos Georgiou', 1600.00);
+
+-- Στοιχηματα
+INSERT INTO STOIXHMA (bet_id, description, stoixima_datetime, employee_id)
+VALUES
+('B0001', 'Football Match: AEK vs PAOK', '2025-10-21 20:00:00', 'E001'),
+('B0002', 'Basketball Game: Olympiakos vs Panathinaikos', '2025-10-22 19:00:00', 'E002'),
+('B0003', 'Tennis Final: Tsitsipas vs Alcaraz', '2025-10-23 18:30:00', 'E001'),
+('B0004', 'Horse Racing Event', '2025-10-24 17:00:00', 'E002');
+
+-- Συμμετοχές
+INSERT INTO SUMMETOXH (player_id, bet_id, bet_amount, bet_datetime, result_amount)
+VALUES
+(1, 'B0001', 50.00, '2025-10-21 19:50:00', 125.00),
+(1, 'B0002', 30.00, '2025-10-22 18:45:00', 0.00),
+(2, 'B0002', 40.00, '2025-10-22 18:55:00', 0.00),
+(2, 'B0003', 60.00, '2025-10-23 18:15:00', 180.00),
+(3, 'B0001', 70.00, '2025-10-21 19:55:00', 175.00),
+(3, 'B0004', 20.00, '2025-10-24 16:45:00', 0.00);
 
 CREATE TABLE IF NOT EXISTS KATATHESI(
 	transtaction_id INT primary key auto_increment,
@@ -78,46 +105,4 @@ CREATE TABLE IF NOT EXISTS PAIKTHS_BONUS(
         ON DELETE CASCADE ON UPDATE CASCADE,
     FOREIGN KEY (bonus_id) REFERENCES BONUS(bonus_id)
         ON DELETE CASCADE ON UPDATE CASCADE
-);
-
--- Εισαγωγή δειγματικών δεδομένων
-INSERT INTO PAIKTHS (player_id, username, balance)
-VALUES
-(1, 'giorgos28', 150.00),
-(2, 'maria32', 75.50),
-(3, 'alex25', 250.00);
-
-INSERT INTO YPALLHLOS (employee_id, fullname, salary)
-VALUES
-('E001', 'Eleni Stamati', 1200.00),
-('E002', 'Petros Athanasiou', 1400.00),
-('E003', 'Nikos Georgiou', 1600.00);
-
-INSERT INTO STOIXHMA (bet_id, description, stoixima_datetime, employee_id)
-VALUES
-('B0001', 'Football Match: AEK vs PAOK', '2025-10-21 20:00:00', 'E001'),
-('B0002', 'Basketball Game: Olympiakos vs Panathinaikos', '2025-10-22 19:00:00', 'E002'),
-('B0003', 'Tennis Final: Tsitsipas vs Alcaraz', '2025-10-23 18:30:00', 'E001'),
-('B0004', 'Horse Racing Event', '2025-10-24 17:00:00', 'E002');
-
-INSERT INTO SUMMETOXH (player_id, bet_id, bet_amount, bet_datetime, result_amount)
-VALUES
-(1, 'B0001', 50.00, '2025-10-21 19:50:00', 125.00),
-(1, 'B0002', 30.00, '2025-10-22 18:45:00', 0.00),
-(2, 'B0002', 40.00, '2025-10-22 18:55:00', 0.00),
-(2, 'B0003', 60.00, '2025-10-23 18:15:00', 180.00),
-(3, 'B0001', 70.00, '2025-10-21 19:55:00', 175.00),
-(3, 'B0004', 20.00, '2025-10-24 16:45:00', 0.00);
-
-
-
-
-
-
-
-
-
-
-
-
-
+        );
