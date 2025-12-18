@@ -9,7 +9,7 @@
 
 **Ένα σύγχρονο σύστημα διαχείρισης βάσης δεδομένων για καζίνο και στοιχηματικές πλατφόρμες**
 
-[Features](#-features) • [Installation](#-installation) • [Usage](#-usage) • [Team](#-team) • [License](#-license)
+[Features](#-features) • [Installation](#-installation) • [Database Schema](#-database-schema) • [Screenshots](#-screenshots) • [ER Diagram](#️-er-diagram) • [Usage](#-usage) • [Team](#-team) • [License](#-license)
 
 </div>
 
@@ -94,9 +94,11 @@
 
 2. **Δημιουργήστε τη βάση δεδομένων**
    ```sql
-   CREATE DATABASE stoiximatiki;
+   CREATE DATABASE Stoiximatiki;
    ```
-   Εισαγάγετε το SQL schema από το αρχείο `Stoiximatiki.sql`
+   Εισαγάγετε το SQL schema από το αρχείο `database/Stoiximatiki.sql`
+   
+   > **Σημείωση**: Το SQL αρχείο περιέχει μόνο το καθαρό schema της βάσης (πίνακες, views, triggers, stored procedures) χωρίς INSERT ή SELECT statements, ώστε να είναι εύκολη η εγκατάσταση και η κατανόηση της δομής.
 
 3. **Ρυθμίστε το config.php**
    ```bash
@@ -148,6 +150,63 @@
 **Τμήμα Πληροφορικής**  
 **Δημοκρίτειο Πανεπιστήμιο Θράκης**
 
+## 📊 Database Schema
+
+Η βάση δεδομένων **Stoiximatiki** αποτελείται από τους παρακάτω πίνακες:
+
+### Κύριοι Πίνακες
+- **PAIKTHS** - Πίνακας παικτών (player_id, username, balance)
+- **YPALLHLOS** - Πίνακας υπαλλήλων (employee_id, employee_name, salary)
+- **AGONAS** - Πίνακας αγώνων (match_id, home_team, away_team, match_date)
+- **STOIXIMA** - Πίνακας στοιχημάτων (bet_id, match_id, bet_desc, bet_date, employee_id)
+- **SYMMETOXI** - Πίνακας συμμετοχών παικτών σε στοιχήματα (bet_id, player_id, bet_amount, bet_date)
+- **BANK_ACCOUNT** - Πίνακας τραπεζικών λογαριασμών (IBAN, player_id, bank_name)
+- **SYNALLAGES** - Πίνακας συναλλαγών (transaction_id, player_id, amount, transaction_date, transaction_type)
+- **BONUS** - Πίνακας μπόνους (bonus_id, bonus_type, bonus_value, expiration_date)
+- **PAIKTHS_BONUS** - Ενδιάμεσος πίνακας για σχέση N:M μεταξύ παικτών και μπόνους
+- **BETS_IN_CHARGE** - Πίνακας στοιχημάτων ανά υπάλληλο (employee_id, betsInCharge)
+
+### Views
+- **PAIKTHS_STOIXIMA** - View που συνδυάζει πληροφορίες παικτών, στοιχημάτων και συμμετοχών
+
+### Triggers
+- **yp_diaxeirizetai_bet** - Trigger που ενημερώνει αυτόματα τον πίνακα BETS_IN_CHARGE όταν προστίθεται νέο στοίχημα
+
+### Stored Procedures
+- **AddYpallhlos** - Procedure για εισαγωγή νέου υπαλλήλου
+
+### Σχέσεις
+- **1:1** - PAIKTHS ↔ BANK_ACCOUNT (κάθε παίκτης έχει έναν μόνο λογαριασμό)
+- **1:N** - AGONAS → STOIXIMA (ένας αγώνας έχει πολλά στοιχήματα)
+- **1:N** - YPALLHLOS → STOIXIMA (ένας υπάλληλος διαχειρίζεται πολλά στοιχήματα)
+- **1:N** - PAIKTHS → SYNALLAGES (ένας παίκτης έχει πολλές συναλλαγές)
+- **N:M** - PAIKTHS ↔ STOIXIMA (μέσω SYMMETOXI)
+- **N:M** - PAIKTHS ↔ BONUS (μέσω PAIKTHS_BONUS)
+
+## 📸 Screenshots
+
+<!-- Προσθέστε screenshots του συστήματος εδώ -->
+<!-- 
+### Main Dashboard
+![Main Dashboard](screenshots/dashboard.png)
+
+### Login Page
+![Login Page](screenshots/login.png)
+
+### Database Management
+![Database Management](screenshots/database-management.png)
+-->
+
+> 💡 **Σημείωση**: Προσθέστε screenshots του συστήματος σε αυτή την ενότητα για να δείξετε την εμφάνιση και τη λειτουργικότητα του StoixiBet Data Control.
+
+## 🗺️ ER Diagram
+
+Το Entity-Relationship (ER) διάγραμμα της βάσης δεδομένων:
+
+![ER Diagram](docs/Diagram.png)
+
+> 📋 Το ER διάγραμμα απεικονίζει όλες τις οντότητες, τα χαρακτηριστικά τους και τις σχέσεις μεταξύ τους στη βάση δεδομένων Stoiximatiki.
+
 ## 🗂️ Project Structure
 
 ```
@@ -169,7 +228,9 @@ stoixibet-data-control/
 │   ├── logariasmos.php        # Accounts management
 │   ├── agonas.php             # Matches management
 │   ├── bonus.php              # Bonuses management
-│   └── paikths_bonus.php      # Player-Bonus assignments
+│   ├── paikths_bonus.php      # Player-Bonus assignments
+│   ├── bets_in_charge.php     # Bets in charge management
+│   └── paikths_stoixima.php   # Player-Bets view
 │
 ├── Frontend/                    # Frontend assets
 │   ├── style.css              # Main stylesheet
@@ -185,8 +246,7 @@ stoixibet-data-control/
 │   └── dipapag.png
 │
 ├── database/                    # Database files
-│   ├── Stoiximatiki.sql       # Main schema
-│   └── Stoiximatiki_FOR_SERVER.sql
+│   └── Stoiximatiki.sql       # Main database schema (clean, no inserts/selects)
 │
 ├── docs/                        # Documentation & diagrams
 │   └── Diagram.png
