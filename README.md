@@ -9,6 +9,8 @@
 
 **Ένα σύγχρονο σύστημα διαχείρισης βάσης δεδομένων για καζίνο και στοιχηματικές πλατφόρμες**
 
+🌐 **Live Demo**: [http://lessons.dcie.teiemt.gr/db2/student_2507/index.php](http://lessons.dcie.teiemt.gr/db2/student_2507/index.php)
+
 [Features](#-features) • [Installation](#-installation) • [Database Schema](#-database-schema) • [Screenshots](#-screenshots) • [ER Diagram](#️-er-diagram) • [Usage](#-usage) • [Team](#-team) • [License](#-license)
 
 </div>
@@ -122,6 +124,8 @@
    - Username: `admin`
    - Password: `admin`
 
+> 🌐 **Live Demo**: Το σύστημα είναι διαθέσιμο online στο [http://lessons.dcie.teiemt.gr/db2/student_2507/index.php](http://lessons.dcie.teiemt.gr/db2/student_2507/index.php)
+
 ## 🚀 Usage
 
 ### Admin Mode
@@ -185,19 +189,35 @@
 
 ## 📸 Screenshots
 
-<!-- Προσθέστε screenshots του συστήματος εδώ -->
-<!-- 
-### Main Dashboard
-![Main Dashboard](screenshots/dashboard.png)
+### Welcome Page
+Η κύρια σελίδα υποδοχής με το σύγχρονο UI design και animations.
+
+![Welcome Page](screenshots/Welcome%20Page.png)
+
+### Loading Page
+Η σελίδα φόρτωσης με animated progress indicator.
+
+![Loading Page](screenshots/Loading%20Page.png)
 
 ### Login Page
-![Login Page](screenshots/login.png)
+Η σελίδα σύνδεσης για διαχειριστές με secure authentication.
 
-### Database Management
-![Database Management](screenshots/database-management.png)
--->
+![Login Page](screenshots/Login%20Page.png)
 
-> 💡 **Σημείωση**: Προσθέστε screenshots του συστήματος σε αυτή την ενότητα για να δείξετε την εμφάνιση και τη λειτουργικότητα του StoixiBet Data Control.
+### Tables Page
+Η κύρια σελίδα διαχείρισης με όλους τους διαθέσιμους πίνακες.
+
+![Tables Page](screenshots/Tables%20Page.png)
+
+### Players Table (View-Only Mode)
+Προβολή του πίνακα παικτών σε view-only mode για regular users.
+
+![Players Table View-Only](screenshots/Players%20TablePage.png)
+
+### Players Table (Admin Mode)
+Πλήρης διαχείριση του πίνακα παικτών με CRUD operations για διαχειριστές.
+
+![Players Table Admin](screenshots/Players%20Table%20Page(admin).png)
 
 ## 🗺️ ER Diagram
 
@@ -250,6 +270,14 @@ stoixibet-data-control/
 │
 ├── docs/                        # Documentation & diagrams
 │   └── Diagram.png
+│
+├── screenshots/                 # Application screenshots
+│   ├── Welcome Page.png
+│   ├── Loading Page.png
+│   ├── Login Page.png
+│   ├── Tables Page.png
+│   ├── Players TablePage.png
+│   └── Players Table Page(admin).png
 │
 └── README.md                    # This file
 ```
